@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
 import { OrmConfigModule } from "./config/db/orm.config.module";
+import { UserModule } from "./infra/modules/user.module";
 
 @Module({
-    imports: [ConfigModule.forRoot(), OrmConfigModule],
+    imports: [OrmConfigModule, UserModule],
     controllers: [],
     providers: [],
 })
