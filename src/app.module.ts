@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
-import { OrmConfigModule } from "./config/db/orm.config.module";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { dataSourceOptions } from "./config/db/data-source";
 import { UserModule } from "./infra/modules/user.module";
 
 @Module({
-    imports: [OrmConfigModule, UserModule],
+    imports: [TypeOrmModule.forRoot(dataSourceOptions), UserModule],
     controllers: [],
     providers: [],
 })
