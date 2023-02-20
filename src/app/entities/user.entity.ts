@@ -5,10 +5,12 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    OneToMany,
     OneToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { Post } from "./post.entity";
 import { Profile } from "./profile.entity";
 
 @Entity({ name: "users" })
@@ -37,6 +39,9 @@ export class User {
 
     @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
     profile: Profile;
+
+    @OneToMany(() => Post, (post) => post.user)
+    post: Array<Post>;
 
     @BeforeInsert()
     passwdHash() {

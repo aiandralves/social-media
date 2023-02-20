@@ -1,3 +1,4 @@
+import { NotFoundException } from "@nestjs/common";
 import { Inject } from "@nestjs/common/decorators/core/inject.decorator";
 import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator";
 import { CreateUserDTO } from "../dtos/create-user.dto";
@@ -15,7 +16,7 @@ export class UserService {
     async getUser(id: number): Promise<User> {
         const user = await this.userRepository.findById(id);
 
-        if (!user) throw new Error("Usuário não encontrado!");
+        if (!user) throw new NotFoundException("Usuário não encontrado!");
 
         return user;
     }
@@ -35,7 +36,7 @@ export class UserService {
     async update(id: number, data: UpdateUserDTO): Promise<UpdateUserDTO> {
         const user = await this.userRepository.findById(id);
 
-        if (!user) throw new Error("Usuário não encontrado!");
+        if (!user) throw new NotFoundException("Usuário não encontrado!");
 
         user.name = data.name;
         user.username = data.username;
@@ -46,7 +47,7 @@ export class UserService {
     async delete(id: number): Promise<void> {
         const user = await this.userRepository.findById(id);
 
-        if (!user) throw new Error("Usuário não encontrado!");
+        if (!user) throw new NotFoundException("Usuário não encontrado!");
 
         await this.userRepository.delete(user.id);
     }

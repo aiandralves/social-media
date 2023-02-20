@@ -6,9 +6,10 @@ import { USER } from "src/app/repositories/user.repository";
 import { UserService } from "src/app/services/user.service";
 import { UserController } from "../controllers/user.controller";
 import { UserTypeorm } from "../db/typeorm/user.typeorm";
+import { PostModule } from "./post.module";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User, Profile])],
+    imports: [TypeOrmModule.forFeature([User, Profile]), PostModule],
     controllers: [UserController],
     providers: [
         UserService,
@@ -17,6 +18,6 @@ import { UserTypeorm } from "../db/typeorm/user.typeorm";
             provide: USER,
         },
     ],
-    exports: [],
+    exports: [UserService],
 })
 export class UserModule {}
