@@ -1,4 +1,6 @@
-import { IsOptional } from "class-validator";
+import { Type } from "class-transformer";
+import { IsOptional, ValidateNested } from "class-validator";
+import { UpdateProfileDTO } from "./update-profile.dto";
 
 export class UpdateUserDTO {
     @IsOptional()
@@ -6,4 +8,9 @@ export class UpdateUserDTO {
 
     @IsOptional()
     username: string;
+
+    @IsOptional()
+    @Type(() => UpdateProfileDTO)
+    @ValidateNested()
+    profile: UpdateProfileDTO;
 }

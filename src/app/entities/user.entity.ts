@@ -1,4 +1,15 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import * as bcrypt from "bcrypt";
+import { Exclude } from "class-transformer";
+import {
+    BeforeInsert,
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from "typeorm";
+import { Profile } from "./profile.entity";
 
 @Entity({ name: "users" })
 export class User {
@@ -15,6 +26,7 @@ export class User {
     username: string;
 
     @Column()
+    @Exclude()
     password: string;
 
     @CreateDateColumn({ type: "timestamp" })
@@ -22,4 +34,12 @@ export class User {
 
     @UpdateDateColumn({ type: "timestamp", nullable: true })
     updatedAt: string;
+
+    @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
+    profile: Profile;
+
+    @BeforeInsert()
+    passwdHash() {
+        this.password = bcrypt.hashSync(this.password, 10);
+    }
 }

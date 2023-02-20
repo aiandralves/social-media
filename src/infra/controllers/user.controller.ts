@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, HttpCode, NotFoundException, Param, Post, Put } from "@nestjs/common";
+import {
+    Body,
+    ClassSerializerInterceptor,
+    Controller,
+    Delete,
+    Get,
+    HttpCode,
+    NotFoundException,
+    Param,
+    Post,
+    Put,
+    UseInterceptors,
+} from "@nestjs/common";
 import { ParseIntPipe } from "@nestjs/common/pipes";
 import { CreateUserDTO } from "src/app/dtos/create-user.dto";
 import { UpdateUserDTO } from "src/app/dtos/update-user.dto";
@@ -16,6 +28,7 @@ export class UserController {
     }
 
     @Get(":id")
+    @UseInterceptors(ClassSerializerInterceptor)
     async getUser(@Param("id", new ParseIntPipe()) id: number) {
         return await this.userService.getUser(id).catch((e) => {
             throw new NotFoundException(e.message);
@@ -23,11 +36,13 @@ export class UserController {
     }
 
     @Get()
+    @UseInterceptors(ClassSerializerInterceptor)
     async find() {
         return await this.userService.find();
     }
 
     @Put(":id")
+    @UseInterceptors(ClassSerializerInterceptor)
     async update(@Param("id", new ParseIntPipe()) id: number, @Body() body: UpdateUserDTO) {
         return await this.userService.update(id, body).catch((e) => {
             throw new NotFoundException(e.message);

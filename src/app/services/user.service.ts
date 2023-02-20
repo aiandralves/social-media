@@ -40,7 +40,7 @@ export class UserService {
         user.name = data.name;
         user.username = data.username;
 
-        return await this.userRepository.update(id, user);
+        return await this.userRepository.update(id, data);
     }
 
     async delete(id: number): Promise<void> {
