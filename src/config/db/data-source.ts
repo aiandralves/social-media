@@ -3,6 +3,7 @@ import { Profile } from "src/app/entities/profile.entity";
 import { User } from "src/app/entities/user.entity";
 import { Users1676908790120 } from "src/infra/db/migrations/1676908790120-Users";
 import { Profile1676910803076 } from "src/infra/db/migrations/1676910803076-Profile";
+import { Posts1676915839776 } from "src/infra/db/migrations/1676915839776-Posts";
 import { DataSource, DataSourceOptions } from "typeorm";
 
 ConfigModule.forRoot();
@@ -14,7 +15,7 @@ export const dataSourceOptions: DataSourceOptions = {
     password: process.env.TYPEORM_PASSWORD,
     database: process.env.TYPEORM_DATABASE,
     entities: [User, Profile],
-    migrations: [Users1676908790120, Profile1676910803076],
+    migrations: [Users1676908790120, Profile1676910803076, Posts1676915839776],
     synchronize: false,
 } as DataSourceOptions;
 
