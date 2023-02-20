@@ -15,6 +15,7 @@ import { TypeOrmModule, TypeOrmModuleAsyncOptions } from "@nestjs/typeorm";
             entities: [process.env.TYPEORM_ENTITIES],
             synchronize: false,
             autoLoadEntities: true,
+            loggin: true,
         } as TypeOrmModuleAsyncOptions),
     ],
     exports: [TypeOrmModule],

@@ -1,6 +1,7 @@
 import { Inject } from "@nestjs/common/decorators/core/inject.decorator";
 import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator";
-import { UserDTO } from "../dtos/user.dto";
+import { CreateUserDTO } from "../dtos/create-user.dto";
+import { UpdateUserDTO } from "../dtos/update-user.dto";
 import { User } from "../entities/user.entity";
 import { USER, UserRepository } from "../repositories/user.repository";
 
@@ -19,7 +20,7 @@ export class UserService {
         return user;
     }
 
-    async create(data: UserDTO): Promise<UserDTO> {
+    async create(data: CreateUserDTO): Promise<CreateUserDTO> {
         const email = await this.userRepository.findByEmail(data.email);
 
         if (email) throw new Error("E-mail informado já existe!");
@@ -29,5 +30,24 @@ export class UserService {
 
     async find(): Promise<User[]> {
         return await this.userRepository.find();
+    }
+
+    async update(id: number, data: UpdateUserDTO): Promise<UpdateUserDTO> {
+        const user = await this.userRepository.findById(id);
+
+        if (!user) throw new Error("Usuário não encontrado!");
+
+        user.name = data.name;
+        user.username = data.username;
+
+        return await this.userRepository.update(id, user);
+    }
+
+    async delete(id: number): Promise<void> {
+        const user = await this.userRepository.findById(id);
+
+        if (!user) throw new Error("Usuário não encontrado!");
+
+        await this.userRepository.delete(user.id);
     }
 }
