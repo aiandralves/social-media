@@ -1,5 +1,13 @@
 import { User } from "src/app/entities/user.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    JoinColumn,
+    OneToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from "typeorm";
 
 @Entity({ name: "profiles" })
 export class Profile {
@@ -25,6 +33,6 @@ export class Profile {
     @CreateDateColumn({ type: "timestamp" })
     createdAt: string;
 
-    @CreateDateColumn({ type: "timestamp", nullable: true })
+    @UpdateDateColumn({ type: "timestamp", nullable: true })
     updatedAt: string;
 }

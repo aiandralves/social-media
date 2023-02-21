@@ -1,4 +1,12 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from "typeorm";
 import { User } from "./user.entity";
 
 @Entity({ name: "posts" })
@@ -19,6 +27,6 @@ export class Post {
     @CreateDateColumn({ type: "timestamp" })
     createdAt: string;
 
-    @CreateDateColumn({ type: "timestamp", nullable: true })
+    @UpdateDateColumn({ type: "timestamp", nullable: true })
     updatedAt: string;
 }

@@ -1,4 +1,5 @@
 import { ConfigModule } from "@nestjs/config";
+import { Photo } from "src/app/entities/photo.entity";
 import { Post } from "src/app/entities/post.entity";
 import { Profile } from "src/app/entities/profile.entity";
 import { User } from "src/app/entities/user.entity";
@@ -16,7 +17,7 @@ export const dataSourceOptions: DataSourceOptions = {
     username: process.env.TYPEORM_USERNAME,
     password: process.env.TYPEORM_PASSWORD,
     database: process.env.TYPEORM_DATABASE,
-    entities: [User, Profile, Post],
+    entities: [User, Profile, Post, Photo],
     migrations: [Users1676908790120, Profile1676910803076, Posts1676915839776, Photos1677019758604],
     synchronize: false,
 } as DataSourceOptions;
