@@ -25,14 +25,13 @@ export class PhotoTypeorm implements PhotoRepository {
     async create(postId: number, files: Express.Multer.File[]): Promise<Photo[]> {
         const uploadDir = join(__dirname, "..", "..", "..", "..", "client", "posts", String(postId));
 
-        if (!existsSync(uploadDir)) {
-            mkdirSync(uploadDir, { recursive: true });
-        }
+        if (!existsSync(uploadDir)) mkdirSync(uploadDir, { recursive: true });
 
         const photos = files.map((file) => {
-            const fileName = `${uploadDir}/${Date.now()}-${file.originalname}`;
-            writeFileSync(fileName, file.buffer);
-            return this.repository.create({ postId, photoUrl: `/posts/${postId}/${file.originalname}` });
+            const fileName = `${Date.now()}-${file.originalname}`;
+            const fileDir = `${uploadDir}/${fileName}`;
+            writeFileSync(fileDir, file.buffer);
+            return this.repository.create({ postId, photoUrl: `/posts/${postId}/${fileName}` });
         });
 
         return await this.repository.save(photos);
