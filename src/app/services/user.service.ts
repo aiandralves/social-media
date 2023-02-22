@@ -1,6 +1,7 @@
 import { NotFoundException } from "@nestjs/common";
 import { Inject } from "@nestjs/common/decorators/core/inject.decorator";
 import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator";
+import { CreateFollowerDTO } from "../dtos/create-follower.dto";
 import { CreateUserDTO } from "../dtos/create-user.dto";
 import { UpdateUserDTO } from "../dtos/update-user.dto";
 import { User } from "../entities/user.entity";
@@ -50,5 +51,21 @@ export class UserService {
         if (!user) throw new NotFoundException("Usuário não encontrado!");
 
         await this.userRepository.delete(user.id);
+    }
+
+    async createFollowers(id: number, data: CreateFollowerDTO): Promise<User> {
+        const user = await this.userRepository.findById(id);
+
+        if (!user) throw new NotFoundException("Usuário não encontrado!");
+
+        return await this.userRepository.createFollowers(user.id, data);
+    }
+
+    async findFollowers(id: number): Promise<User[]> {
+        const user = await this.userRepository.findById(id);
+
+        if (!user) throw new NotFoundException("Usuário não encontrado!");
+
+        return await this.userRepository.findFollowers(user.id);
     }
 }

@@ -1,4 +1,5 @@
 import { UpdateUserDTO } from "src/app/dtos/update-user.dto";
+import { CreateFollowerDTO } from "../dtos/create-follower.dto";
 import { CreateUserDTO } from "../dtos/create-user.dto";
 import { User } from "../entities/user.entity";
 
@@ -11,4 +12,6 @@ export interface UserRepository {
     find(): Promise<User[]>;
     update(id: number, data: UpdateUserDTO): Promise<UpdateUserDTO>;
     delete(id: number): Promise<void>;
+    createFollowers(id: number, data: CreateFollowerDTO): Promise<User>;
+    findFollowers(id: number): Promise<User[]>;
 }

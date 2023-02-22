@@ -12,6 +12,7 @@ import {
     UseInterceptors,
 } from "@nestjs/common";
 import { ParseIntPipe } from "@nestjs/common/pipes";
+import { CreateFollowerDTO } from "src/app/dtos/create-follower.dto";
 import { CreatePostDTO } from "src/app/dtos/create-post.dto";
 import { CreateUserDTO } from "src/app/dtos/create-user.dto";
 import { UpdateUserDTO } from "src/app/dtos/update-user.dto";
@@ -69,6 +70,20 @@ export class UserController {
     @Get(":id/posts")
     async findPosts(@Param("id", new ParseIntPipe()) id: number) {
         return await this.postService.find({ userId: id }).catch((e) => {
+            throw new NotFoundException(e.message);
+        });
+    }
+
+    @Post(":id/followers")
+    async createFollowers(@Param("id", new ParseIntPipe()) id: number, @Body() body: CreateFollowerDTO) {
+        return await this.userService.createFollowers(id, body).catch((e) => {
+            throw new NotFoundException(e.message);
+        });
+    }
+
+    @Get(":id/followers")
+    async findFollowers(@Param("id", new ParseIntPipe()) id: number) {
+        return await this.userService.findFollowers(id).catch((e) => {
             throw new NotFoundException(e.message);
         });
     }
