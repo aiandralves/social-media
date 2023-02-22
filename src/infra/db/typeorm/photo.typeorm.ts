@@ -1,26 +1,18 @@
-import { NotFoundException } from "@nestjs/common/exceptions";
-import { InjectRepository } from "@nestjs/typeorm";
+import { InjectDataSource } from "@nestjs/typeorm";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import * as sharp from "sharp";
 import { Photo } from "src/app/entities/photo.entity";
 import { PhotoRepository } from "src/app/repositories/photo.repository";
-import { Repository } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 
 export class PhotoTypeorm implements PhotoRepository {
-    constructor(
-        @InjectRepository(Photo)
-        private readonly repository: Repository<Photo>,
-    ) {}
+    private readonly repository: Repository<Photo> = this.dataSource.getRepository(Photo);
+
+    constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
     async findById(id: number): Promise<Photo> {
-        let photo: Photo;
-        try {
-            photo = await this.repository.findOneOrFail({ where: { id: id } });
-        } catch (e) {
-            throw new NotFoundException(e.message);
-        }
-        return photo;
+        return await this.repository.findOne({ where: { id: id } });
     }
 
     async create(postId: number, files: Express.Multer.File[]): Promise<Photo[]> {
@@ -46,12 +38,7 @@ export class PhotoTypeorm implements PhotoRepository {
     }
 
     async delete(id: number): Promise<void> {
-        try {
-            await this.repository.findOneOrFail({ where: { id: id } });
-        } catch (e) {
-            throw new NotFoundException(e.message);
-        }
-
-        await this.repository.delete({ id });
+        const photo = await this.findById(id);
+        await this.repository.delete(photo.id);
     }
 }
