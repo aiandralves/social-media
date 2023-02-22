@@ -54,7 +54,9 @@ export class PostController {
 
     @Get(":id/photos")
     async findPhotos(@Param("id", new ParseIntPipe()) id: number) {
-        return await this.photoService.find(id);
+        return await this.photoService.find(id).catch((e) => {
+            throw new NotFoundException(e.message);
+        });
     }
 
     @Post(":id/photos")

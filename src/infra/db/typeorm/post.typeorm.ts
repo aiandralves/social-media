@@ -1,19 +1,18 @@
-import { InjectRepository } from "@nestjs/typeorm";
+import { InjectDataSource } from "@nestjs/typeorm";
 import { CreatePostDTO } from "src/app/dtos/create-post.dto";
 import { FindPostDTO } from "src/app/dtos/find-post.dto";
 import { UpdatePostDTO } from "src/app/dtos/update-post.dto";
 import { Post } from "src/app/entities/post.entity";
 import { PostRepository } from "src/app/repositories/post.repository";
-import { Repository } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 
 export class PostTypeorm implements PostRepository {
-    constructor(
-        @InjectRepository(Post)
-        private readonly repository: Repository<Post>,
-    ) {}
+    private readonly repository: Repository<Post> = this.dataSource.getRepository(Post);
+
+    constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
     async findById(id: number): Promise<Post> {
-        return await this.repository.createQueryBuilder("post").where("post.id = :id", { id: id }).getOne();
+        return await this.repository.findOne({ where: { id: id } });
     }
 
     async create(userId: number, data: CreatePostDTO): Promise<CreatePostDTO> {

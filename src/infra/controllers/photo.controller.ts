@@ -1,4 +1,4 @@
-import { Controller, Delete, Param, ParseIntPipe } from "@nestjs/common";
+import { Controller, Delete, NotFoundException, Param, ParseIntPipe } from "@nestjs/common";
 import { PhotoService } from "src/app/services/photo.service";
 
 @Controller("api/v1/photos")
@@ -7,6 +7,8 @@ export class PhotoController {
 
     @Delete(":id")
     async delete(@Param("id", new ParseIntPipe()) id: number) {
-        return await this.photoService.delete(id);
+        return await this.photoService.delete(id).catch((e) => {
+            throw new NotFoundException(e.message);
+        });
     }
 }
