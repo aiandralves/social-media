@@ -31,7 +31,7 @@ export class UserTypeorm implements UserRepository {
     }
 
     async find(): Promise<User[]> {
-        return await this.repository.find();
+        return await this.repository.find({ relations: { profile: true } });
     }
 
     async update(id: number, data: UpdateUserDTO): Promise<UpdateUserDTO> {

@@ -33,5 +33,5 @@ export class Post {
     updatedAt: string;
 
     @OneToMany(() => Photo, (photo) => photo.post)
-    photo: Photo[];
+    photo: Array<Photo>;
 }

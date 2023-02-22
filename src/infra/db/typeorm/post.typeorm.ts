@@ -22,7 +22,6 @@ export class PostTypeorm implements PostRepository {
     async find(options?: FindPostDTO): Promise<Post[]> {
         const post = this.repository
             .createQueryBuilder("post")
-            .select(["post.id", "post.userId", "post.description"])
             .addSelect(["user.username"])
             .leftJoin("post.user", "user");
 
