@@ -33,7 +33,6 @@ export class Followers1677074973317 implements MigrationInterface {
                         name: "updatedAt",
                         type: "timestamp",
                         isNullable: true,
-                        default: "now()",
                     },
                 ],
             }),

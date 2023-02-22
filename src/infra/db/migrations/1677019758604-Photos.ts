@@ -32,7 +32,6 @@ export class Photos1677019758604 implements MigrationInterface {
                         name: "updatedAt",
                         type: "timestamp",
                         isNullable: true,
-                        default: "now()",
                     },
                 ],
             }),

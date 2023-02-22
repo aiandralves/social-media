@@ -32,7 +32,6 @@ export class Posts1676915839776 implements MigrationInterface {
                         name: "updatedAt",
                         type: "timestamp",
                         isNullable: true,
-                        default: "now()",
                     },
                 ],
             }),
