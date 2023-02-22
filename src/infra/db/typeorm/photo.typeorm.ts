@@ -2,6 +2,7 @@ import { NotFoundException } from "@nestjs/common/exceptions";
 import { InjectRepository } from "@nestjs/typeorm";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
+import * as sharp from "sharp";
 import { Photo } from "src/app/entities/photo.entity";
 import { PhotoRepository } from "src/app/repositories/photo.repository";
 import { Repository } from "typeorm";
@@ -27,12 +28,15 @@ export class PhotoTypeorm implements PhotoRepository {
 
         if (!existsSync(uploadDir)) mkdirSync(uploadDir, { recursive: true });
 
-        const photos = files.map((file) => {
-            const fileName = `${Date.now()}-${file.originalname}`;
-            const fileDir = `${uploadDir}/${fileName}`;
-            writeFileSync(fileDir, file.buffer);
-            return this.repository.create({ postId, photoUrl: `/posts/${postId}/${fileName}` });
-        });
+        const photos = await Promise.all(
+            files.map(async (file) => {
+                const fileName = `${Date.now()}-${file.originalname}`;
+                const fileDir = `${uploadDir}/${fileName}`;
+                const fileBuffer = await sharp(file.buffer).resize(400, 400, { fit: "contain" }).toBuffer();
+                writeFileSync(fileDir, fileBuffer);
+                return this.repository.create({ postId, photoUrl: `/posts/${postId}/${fileName}` });
+            }),
+        );
 
         return await this.repository.save(photos);
     }
