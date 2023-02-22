@@ -5,6 +5,8 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinTable,
+    ManyToMany,
     OneToMany,
     OneToOne,
     PrimaryGeneratedColumn,
@@ -42,6 +44,14 @@ export class User {
 
     @OneToMany(() => Post, (post) => post.user)
     post: Array<Post>;
+
+    @ManyToMany(() => User, (user) => user.follower)
+    @JoinTable({
+        name: "followers",
+        joinColumn: { name: "userId", referencedColumnName: "id" },
+        inverseJoinColumn: { name: "followerId", referencedColumnName: "id" },
+    })
+    follower: Array<User>;
 
     @BeforeInsert()
     passwdHash() {
