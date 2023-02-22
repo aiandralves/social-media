@@ -68,4 +68,8 @@ export class UserService {
 
         return await this.userRepository.findFollowers(user.id);
     }
+
+    async findFollows(followerId: number): Promise<User[]> {
+        return await this.userRepository.findFollows(followerId);
+    }
 }

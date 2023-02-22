@@ -75,4 +75,13 @@ export class UserTypeorm implements UserRepository {
             .where("user.id = :id", { id: id })
             .getMany();
     }
+
+    async findFollows(followerId: number): Promise<User[]> {
+        return await this.repository
+            .createQueryBuilder("user")
+            .select(["user.id", "user.name", "user.username"])
+            .leftJoin("user.follower", "follower")
+            .where("followerId = :followerId", { followerId: followerId })
+            .getMany();
+    }
 }

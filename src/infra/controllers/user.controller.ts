@@ -133,4 +133,10 @@ export class UserController {
             throw new NotFoundException(e.message);
         });
     }
+
+    @Get(":id/follows")
+    @UseInterceptors(ClassSerializerInterceptor)
+    async findFollows(@Param("id", new ParseIntPipe()) id: number) {
+        return await this.userService.findFollows(id);
+    }
 }

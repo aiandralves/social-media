@@ -14,4 +14,5 @@ export interface UserRepository {
     delete(id: number): Promise<void>;
     createFollowers(id: number, data: CreateFollowerDTO): Promise<User>;
     findFollowers(id: number): Promise<User[]>;
+    findFollows(followerId: number): Promise<User[]>;
 }
