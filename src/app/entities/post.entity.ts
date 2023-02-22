@@ -4,9 +4,11 @@ import {
     Entity,
     JoinColumn,
     ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { Photo } from "./photo.entity";
 import { User } from "./user.entity";
 
 @Entity({ name: "posts" })
@@ -29,4 +31,7 @@ export class Post {
 
     @UpdateDateColumn({ type: "timestamp", nullable: true })
     updatedAt: string;
+
+    @OneToMany(() => Photo, (photo) => photo.post)
+    photo: Photo[];
 }
