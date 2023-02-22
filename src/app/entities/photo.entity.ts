@@ -3,7 +3,7 @@ import {
     CreateDateColumn,
     Entity,
     JoinColumn,
-    ManyToMany,
+    ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
@@ -14,7 +14,7 @@ export class Photo {
     @PrimaryGeneratedColumn("increment")
     id: number;
 
-    @ManyToMany(() => Post, (post) => post.photo)
+    @ManyToOne(() => Post, (post) => post.photo)
     @JoinColumn({ name: "postId", referencedColumnName: "id" })
     post: Post;
 

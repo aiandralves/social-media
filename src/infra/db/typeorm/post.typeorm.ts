@@ -23,7 +23,9 @@ export class PostTypeorm implements PostRepository {
         const post = this.repository
             .createQueryBuilder("post")
             .addSelect(["user.username"])
-            .leftJoin("post.user", "user");
+            .addSelect(["photo.id", "photo.photoUrl"])
+            .leftJoin("post.user", "user")
+            .leftJoin("post.photo", "photo");
 
         if (options?.userId) post.andWhere("post.userId = :userId", { userId: options.userId });
 
