@@ -1,0 +1,67 @@
+{
+	"name": "Paula Anjos",
+	"email": "paula.anjos@gmail.com",
+	"username": "paula",
+	"password": "123456789",
+	"profile": {
+		"bio": "Seja Livre e Grata!",
+		"avatar": "encr.pw/4tZPy",
+		"privacy": "0"
+	}
+}
+{
+	"name": "Aiandra Alves",
+	"email": "aiandra.alves@gmail.com",
+	"username": "aiandra",
+	"password": "123456789",
+	"profile": {
+		"bio": "Desenvolvedora Fullstack",
+		"avatar": "encr.pw/u8aSr",
+		"privacy": "1"
+	}
+}
+{
+	"name": "Erika Anjos",
+	"email": "erika.anjos@gmail.com",
+	"username": "erika",
+	"password": "987654321",
+	"profile": {
+		"bio": "🌻 Psicóloga. Pelo simples e pelo extraordinário, Seja Grato!",
+		"avatar": "l1nq.com/Z9Hw7",
+		"privacy": "1"
+	}
+}
+{
+	"name": "Maone Barbosa",
+	"email": "maone.barbosa@gmail.com",
+	"username": "maone",
+	"password": "369852147",
+	"profile": {
+		"bio": "Gerente de Projetos 💻",
+		"avatar": "l1nq.com/mQ9I9",
+		"privacy": "1"
+	}
+}
+{
+	"name": "Heitor Borges",
+	"email": "heitor.borges@gmail.com",
+	"username": "heitor",
+	"password": "Erika@1824",
+	"profile": {
+		"bio": "Pequeno Príncipe 🤴",
+		"avatar": "l1nq.com/r7kRx",
+		"privacy": "0"
+	}
+}
+{
+	"description": "Gratidão 🙏"
+}
+{
+	"description": "O leve, o sincero, e o recíproco tem me interessado mais. 🌻✨"
+}
+{
+	"description": "Falaa Galerinha!! Hoje resolvi passar aqui para mostrar um projeto que fiz de social media com NestJS e Angular 15!!"
+}
+{
+	"description": "Velhos caminhos não levam a novos destinos. Refaça a rota! 🌻✨"
+}

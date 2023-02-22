@@ -12,6 +12,7 @@ import {
     UseInterceptors,
 } from "@nestjs/common";
 import { ParseIntPipe } from "@nestjs/common/pipes";
+import { ApiTags } from "@nestjs/swagger/dist/decorators";
 import { CreateFollowerDTO } from "src/app/dtos/create-follower.dto";
 import { CreatePostDTO } from "src/app/dtos/create-post.dto";
 import { CreateUserDTO } from "src/app/dtos/create-user.dto";
@@ -20,6 +21,7 @@ import { PostService } from "src/app/services/post.service";
 import { UserService } from "src/app/services/user.service";
 
 @Controller("api/v1/users")
+@ApiTags("users")
 export class UserController {
     constructor(private readonly userService: UserService, private readonly postService: PostService) {}
 

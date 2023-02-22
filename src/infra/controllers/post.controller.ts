@@ -14,12 +14,14 @@ import {
 } from "@nestjs/common";
 import { ParseIntPipe } from "@nestjs/common/pipes";
 import { FilesInterceptor } from "@nestjs/platform-express";
+import { ApiTags } from "@nestjs/swagger/dist/decorators";
 import { UpdatePostDTO } from "src/app/dtos/update-post.dto";
 import { PhotoService } from "src/app/services/photo.service";
 import { PostService } from "src/app/services/post.service";
 import { FindPostDTO } from "./../../app/dtos/find-post.dto";
 
 @Controller("api/v1/posts")
+@ApiTags("posts")
 export class PostController {
     constructor(private readonly postService: PostService, private readonly photoService: PhotoService) {}
 
