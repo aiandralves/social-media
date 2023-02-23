@@ -21,7 +21,7 @@ import { PostService } from "src/app/services/post.service";
 import { UserService } from "src/app/services/user.service";
 import { BadRequestResponse, NotFoundResponse } from "../swaggers/error.swagger";
 import { FollowerFindResponse, FollowerResponse } from "../swaggers/follower.swagger";
-import { PostFindResponse, PostResponse } from "../swaggers/post.swagger";
+import { FollowFindResponse, PostFindResponse, PostResponse } from "../swaggers/post.swagger";
 import { UserResponse } from "../swaggers/user.swagger";
 
 @Controller("api/v1/users")
@@ -111,7 +111,6 @@ export class UserController {
     }
 
     @Get(":id/followers")
-    @UseInterceptors(ClassSerializerInterceptor)
     @ApiOperation({ summary: "Listar seguidores de um usuário" })
     @ApiResponse({ type: FollowerFindResponse, status: 200, description: "Lista de seguidores do usuário" })
     @ApiResponse({ type: BadRequestResponse, status: 400, description: "Informe os parâmetros válidos" })
@@ -127,7 +126,6 @@ export class UserController {
     @ApiOperation({ summary: "Cadastrar seguidor do usuário" })
     @ApiResponse({ type: FollowerResponse, status: 201, description: "Seguidor do usuário cadastrado com sucesso" })
     @ApiResponse({ type: BadRequestResponse, status: 400, description: "Informe os parâmetros válidos" })
-    @ApiResponse({ type: NotFoundResponse, status: 404, description: "Usuário não encontrado" })
     async createFollowers(@Param("id", new ParseIntPipe()) id: number, @Body() body: CreateFollowerDTO) {
         return await this.userService.createFollowers(id, body).catch((e) => {
             throw new NotFoundException(e.message);
@@ -135,8 +133,18 @@ export class UserController {
     }
 
     @Get(":id/follows")
-    @UseInterceptors(ClassSerializerInterceptor)
+    @ApiOperation({ summary: "Listar todos os usuários que o usuário selecionado segue" })
+    @ApiResponse({ type: FollowerFindResponse, status: 200, description: "Retornar uma lista de usuários" })
+    @ApiResponse({ type: BadRequestResponse, status: 400, description: "Informe os parâmetros válidos" })
     async findFollows(@Param("id", new ParseIntPipe()) id: number) {
         return await this.userService.findFollows(id);
+    }
+
+    @Get(":id/follows/posts")
+    @ApiOperation({ summary: "Listar todas as postagens dos seguidores dos usuarios" })
+    @ApiResponse({ type: FollowFindResponse, status: 200, description: "Retornar uma lista de postagens" })
+    @ApiResponse({ type: BadRequestResponse, status: 400, description: "Informe os parâmetros válidos" })
+    async findFollowsPosts(@Param("id", new ParseIntPipe()) id: number) {
+        return await this.userService.findFollowsPosts(id);
     }
 }

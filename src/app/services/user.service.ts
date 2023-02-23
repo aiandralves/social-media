@@ -4,7 +4,9 @@ import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator"
 import { CreateFollowerDTO } from "../dtos/create-follower.dto";
 import { CreateUserDTO } from "../dtos/create-user.dto";
 import { UpdateUserDTO } from "../dtos/update-user.dto";
+import { Post } from "../entities/post.entity";
 import { User } from "../entities/user.entity";
+import { POST, PostRepository } from "../repositories/post.repository";
 import { USER, UserRepository } from "../repositories/user.repository";
 
 @Injectable()
@@ -12,6 +14,8 @@ export class UserService {
     constructor(
         @Inject(USER)
         private userRepository: UserRepository,
+        @Inject(POST)
+        private postRepository: PostRepository,
     ) {}
 
     async getUser(id: number): Promise<User> {
@@ -71,5 +75,11 @@ export class UserService {
 
     async findFollows(followerId: number): Promise<User[]> {
         return await this.userRepository.findFollows(followerId);
+    }
+
+    async findFollowsPosts(followerId: number): Promise<Post[]> {
+        const follows = await this.findFollows(followerId);
+        const followerIds = follows.map(({ id }) => id);
+        return await this.postRepository.find({ userIds: followerIds });
     }
 }

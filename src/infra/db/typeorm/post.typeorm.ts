@@ -27,7 +27,11 @@ export class PostTypeorm implements PostRepository {
             .leftJoin("post.user", "user")
             .leftJoin("post.photo", "photo");
 
-        if (options?.userId) post.andWhere("post.userId = :userId", { userId: options.userId });
+        if (options?.userId) {
+            post.andWhere("post.userId = :userId", { userId: options.userId });
+        } else if (options?.userIds) {
+            post.andWhere("post.userId IN (:userIds)", { userIds: options.userIds });
+        }
 
         return await post.getMany();
     }
